@@ -1,0 +1,28 @@
+{
+  "id": "./",
+  "name": "Lịch Âm CZ – Lịch Vạn Niên Việt Nam",
+  "short_name": "Lịch Âm CZ",
+  "description": "Lịch Âm Việt Nam: đổi ngày Âm Dương, Can Chi, giờ hoàng đạo, tiết khí, ngày lễ.",
+  "lang": "vi",
+  "dir": "ltr",
+  "start_url": "./?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#FFFAEF",
+  "theme_color": "#8E1B1B",
+  "categories": ["lifestyle", "productivity", "utilities"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Đổi ngày Âm ↔ Dương", "short_name": "Đổi ngày", "url": "./#doi", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Lịch cả năm", "short_name": "Lịch năm", "url": "./#nam", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Ngày lễ trong năm", "short_name": "Ngày lễ", "url": "./#le", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

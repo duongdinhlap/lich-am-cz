@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Lịch Âm CZ – Lịch Vạn Niên Việt Nam</title>
+  <meta name="description" content="Lịch Âm Việt Nam – Lịch Vạn Niên: đổi ngày Âm Dương, Can Chi, giờ hoàng đạo, 24 tiết khí, thập nhị trực và ngày lễ truyền thống.">
+  <meta name="theme-color" content="#8E1B1B">
+  <meta name="color-scheme" content="light">
+
+  <!-- PWA / Cài vào màn hình chính -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="application-name" content="Lịch Âm CZ">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Lịch Âm CZ">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+
+  <!-- Font chữ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap&subset=vietnamese" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#lich" aria-label="Lịch Âm CZ – Trang chủ">
+        <img src="icons/favicon.svg" alt="" width="40" height="40" class="brand-icon">
+        <span class="brand-text">
+          <span class="brand-name">Lịch Âm CZ</span>
+          <span class="brand-sub">Lịch Vạn Niên Việt Nam</span>
+        </span>
+      </a>
+      <button class="btn-install" id="btnInstall" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Cài app</span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="tabbar" aria-label="Điều hướng chính">
+    <a href="#lich" data-tab="lich" class="tab">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+      <span>Hôm nay</span>
+    </a>
+    <a href="#nam" data-tab="nam" class="tab">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>
+      <span>Lịch năm</span>
+    </a>
+    <a href="#doi" data-tab="doi" class="tab">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h14l-3-3M20 16H6l3 3"/></svg>
+      <span>Đổi ngày</span>
+    </a>
+    <a href="#le" data-tab="le" class="tab">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg>
+      <span>Ngày lễ</span>
+    </a>
+  </nav>
+
+  <main id="main">
+    <!-- ============ HÔM NAY + LỊCH THÁNG ============ -->
+    <section class="view" id="view-lich" data-view="lich">
+      <div class="layout-lich">
+        <div class="col-left">
+          <article class="card today" id="todayCard" aria-live="polite"></article>
+          <article class="card" id="hoursCard"></article>
+        </div>
+        <div class="col-right">
+          <article class="card month-card">
+            <div class="month-head">
+              <button class="icon-btn" id="prevMonth" aria-label="Tháng trước">‹</button>
+              <div class="month-title">
+                <h2 id="monthTitle">Tháng</h2>
+                <p id="monthSub" class="muted"></p>
+              </div>
+              <button class="icon-btn" id="nextMonth" aria-label="Tháng sau">›</button>
+            </div>
+            <div class="month-tools">
+              <label class="sr-only" for="selMonth">Chọn tháng</label>
+              <select id="selMonth"></select>
+              <label class="sr-only" for="selYear">Chọn năm</label>
+              <select id="selYear"></select>
+              <button class="chip-btn" id="btnToday">Hôm nay</button>
+            </div>
+            <div class="weekdays" aria-hidden="true">
+              <span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span class="sat">T7</span><span class="sun">CN</span>
+            </div>
+            <div class="grid" id="monthGrid" role="grid"></div>
+          </article>
+
+          <article class="card legend-card">
+            <h3 class="card-title">Chú giải</h3>
+            <ul class="legend">
+              <li><span class="lg-cell lg-m1"><b>1/10</b></span><span><strong>Mồng 1 âm lịch</strong> – ô nền vàng, huy hiệu viền vàng</span></li>
+              <li><span class="lg-cell lg-ram">15</span><span><strong>Ngày Rằm</strong> (15 âm lịch)</span></li>
+              <li><span class="lg-cell lg-today">9</span><span><strong>Hôm nay</strong> – viền đỏ</span></li>
+              <li><span class="lg-cell lg-sel">9</span><span><strong>Ngày đang xem</strong></span></li>
+              <li><span class="lg-dot red"></span><span><strong>Ngày lễ</strong> / sự kiện</span></li>
+              <li><span class="lg-num">2</span><span><strong>Ngày nghỉ lễ</strong> chính thức (số màu đỏ)</span></li>
+              <li><span class="lg-dot gold"></span><span><strong>Ngày hoàng đạo</strong> (ngày tốt)</span></li>
+              <li><span class="lg-mini">N</span><span><strong>Tháng nhuận</strong> âm lịch (vd: 1/6N)</span></li>
+            </ul>
+            <p class="note">Số lớn: ngày dương lịch · số nhỏ: ngày âm lịch. Chạm vào một ngày để xem chi tiết; vuốt trái/phải để đổi tháng.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LỊCH NĂM ============ -->
+    <section class="view" id="view-nam" data-view="nam" hidden>
+      <div class="card year-head">
+        <button class="icon-btn" id="prevYear" aria-label="Năm trước">‹</button>
+        <div class="month-title">
+          <h2 id="yearTitle">Năm</h2>
+          <p id="yearSub" class="muted"></p>
+        </div>
+        <button class="icon-btn" id="nextYear" aria-label="Năm sau">›</button>
+      </div>
+      <div class="year-grid" id="yearGrid"></div>
+    </section>
+
+    <!-- ============ ĐỔI NGÀY ============ -->
+    <section class="view" id="view-doi" data-view="doi" hidden>
+      <div class="conv-grid">
+        <article class="card conv">
+          <h2 class="card-title"><span class="tag">Dương → Âm</span>Đổi ngày Dương lịch sang Âm lịch</h2>
+          <form id="formS2L" class="form">
+            <div class="row3">
+              <label>Ngày<input type="number" inputmode="numeric" id="sD" min="1" max="31" required></label>
+              <label>Tháng<input type="number" inputmode="numeric" id="sM" min="1" max="12" required></label>
+              <label>Năm<input type="number" inputmode="numeric" id="sY" min="1900" max="2100" required></label>
+            </div>
+            <button class="btn-primary" type="submit">Đổi sang Âm lịch</button>
+          </form>
+          <div class="result" id="resS2L"></div>
+        </article>
+
+        <article class="card conv">
+          <h2 class="card-title"><span class="tag gold">Âm → Dương</span>Đổi ngày Âm lịch sang Dương lịch</h2>
+          <form id="formL2S" class="form">
+            <div class="row3">
+              <label>Ngày<input type="number" inputmode="numeric" id="lD" min="1" max="30" required></label>
+              <label>Tháng<input type="number" inputmode="numeric" id="lM" min="1" max="12" required></label>
+              <label>Năm<input type="number" inputmode="numeric" id="lY" min="1900" max="2100" required></label>
+            </div>
+            <label class="check"><input type="checkbox" id="lLeap"> Tháng nhuận</label>
+            <button class="btn-primary" type="submit">Đổi sang Dương lịch</button>
+          </form>
+          <div class="result" id="resL2S"></div>
+        </article>
+
+        <article class="card conv">
+          <h2 class="card-title"><span class="tag">Khoảng cách</span>Đếm ngày đến sự kiện</h2>
+          <div class="quick-list" id="quickList"></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ NGÀY LỄ ============ -->
+    <section class="view" id="view-le" data-view="le" hidden>
+      <div class="card year-head">
+        <button class="icon-btn" id="prevHolYear" aria-label="Năm trước">‹</button>
+        <div class="month-title">
+          <h2 id="holTitle">Ngày lễ</h2>
+          <p id="holSub" class="muted"></p>
+        </div>
+        <button class="icon-btn" id="nextHolYear" aria-label="Năm sau">›</button>
+      </div>
+      <div class="filters" role="tablist">
+        <button class="filter active" data-filter="all">Tất cả</button>
+        <button class="filter" data-filter="lunar">Lễ âm lịch</button>
+        <button class="filter" data-filter="solar">Lễ dương lịch</button>
+        <button class="filter" data-filter="off">Ngày nghỉ</button>
+      </div>
+      <div class="hol-layout">
+        <article class="card"><div id="holList" class="hol-list"></div></article>
+        <article class="card">
+          <h3 class="card-title" id="tkTitle">24 tiết khí</h3>
+          <ol class="tk-list" id="tkList"></ol>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="ornament" aria-hidden="true"><span></span>✦<span></span></div>
+    <p class="footer-brand">Được tạo ra bởi <strong>L-SHOP GROUP</strong></p>
+    <p class="footer-note">Âm lịch tính theo múi giờ Việt Nam (UTC+7) · thuật toán Hồ Ngọc Đức. Thông tin phong thủy mang tính tham khảo.</p>
+  </footer>
+
+  <!-- Hướng dẫn cài trên iPhone -->
+  <div class="sheet" id="iosSheet" hidden>
+    <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="iosTitle">
+      <h3 id="iosTitle">Cài “Lịch Âm CZ” lên iPhone</h3>
+      <ol>
+        <li>Mở trang này bằng <strong>Safari</strong>.</li>
+        <li>Nhấn nút <strong>Chia sẻ</strong> <span class="share-ico">⬆︎</span> ở thanh dưới.</li>
+        <li>Chọn <strong>“Thêm vào MH chính”</strong> rồi nhấn <strong>Thêm</strong>.</li>
+      </ol>
+      <button class="btn-primary" id="iosClose">Đã hiểu</button>
+    </div>
+  </div>
+
+  <script src="assets/js/lunar.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
